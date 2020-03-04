@@ -11,8 +11,9 @@
 #' @details Creates an sf dataframe from
 #' a netcdf file representing a ROMS grid.
 #'
-#' @import wtsGIS
 #' @import ncdf4
+#' @import wtsGIS
+#' @import wtsUtilities
 #'
 #' @export
 #'
@@ -27,9 +28,9 @@ createGridFromNetCDF<-function(netcdf,
   strCRS    <-strCRS[1];
 
   valid_grid_types<-c("rho","psi","u","v");
-  if (!checkValidType(grid_type,valid_grid_types)) stop();
+  if (!wtsUtilities::checkValidType(grid_type,valid_grid_types)) stop();
   valid_coord_types<-c("latlon","xy");
-  if (!checkValidType(grid_type,valid_grid_types)) stop();
+  if (!wtsUtilities::checkValidType(grid_type,valid_grid_types)) stop();
 
   if (inherits(netcdf,"ncdf4")){
     ncf <- netcdf;
