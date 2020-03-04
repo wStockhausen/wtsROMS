@@ -1,0 +1,11 @@
+Package: wtsROMS
+Type: Package
+Title: Functions to deal with ROMS model grids and netcdf output
+Version: 2020.02.28
+Author: Wiliam T. Stockhausen
+Maintainer: Wiliam T. Stockhausen <wiliam.stockhausen@noaa.gov>
+Description: Functions to deal with ROMS model grids and netcdf output.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
