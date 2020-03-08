@@ -10,14 +10,18 @@
 #' Available grids are:
 #' \itemize{
 #'  \item{"CGOA" - Coastal Gulf of Alaska 3km grid}
+#'  \item{"Bering10K" - Bering Sea 10km grid}
 #' }
 #'
 #' @export
 #'
 getGrid<-function(name,verbose=FALSE){
   if (toupper(name)=="CGOA")
-    fn<-system.file(file.path("extdata/grids","CGOA.RData"),package="rROMS");
+    fn<-system.file(file.path("extdata/grids","CGOA.RData"),package="wtsROMS");
     #fn<-file.path("inst/extdata/grids","CGOA.RData");#--for testing
+  if (toupper(name)=="BERING10K")
+    fn<-system.file(file.path("extdata/grids","Bering10k.RData"),package="wtsROMS");
+    #fn<-file.path("inst/extdata/grids","Bering10k.RData");#--for testing
 
   load(fn,verbose=verbose);
   return(roms_grid);

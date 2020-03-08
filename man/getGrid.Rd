@@ -19,5 +19,6 @@ Returns an sf dataframe corresponding to the requested model grid.\cr
 Available grids are:
 \itemize{
  \item{"CGOA" - Coastal Gulf of Alaska 3km grid}
+ \item{"Bering10K" - Bering Sea 10km grid}
 }
 }
