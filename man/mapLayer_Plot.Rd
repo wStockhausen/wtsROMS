@@ -2,21 +2,25 @@
 % Please edit documentation in R/mapLayer_Plot.R
 \name{mapLayer_Plot}
 \alias{mapLayer_Plot}
-\title{Create a \code{tmap} map layer from an \code{sf} dataset representing a model output}
+\title{Create a \code{tmap} map layer from an \code{sf} dataset representing ROMS model output}
 \usage{
 mapLayer_Plot(
   obj,
-  basemap,
+  col = 4,
   n = 10,
   style = ifelse(is.null(breaks), "pretty", "fixed"),
   breaks = NULL,
-  palette = list(cat = c("blue", "red"), div = c("blue", "red"), seq = c("blue", "red"))
+  palette = c("blue", "red"),
+  basemap = NULL,
+  aes.palette = list(cat = c("blue", "red"), div = c("blue", "red"), seq = c("blue",
+    "red")),
+  showMap = TRUE
 )
 }
 \arguments{
 \item{obj}{- an \code{sf} polygon dataset.}
 
-\item{basemap}{- basemap for map, or name associated with a pre-defined basemap (see \code{createBasemap}).}
+\item{col}{- name or index of values column to plot}
 
 \item{n}{- preferred number of classes.}
 
@@ -24,17 +28,23 @@ mapLayer_Plot(
 
 \item{breaks}{- in case style=="fixed", breaks should be specified. The breaks argument can also be used when style="cont". In that case, the breaks are mapped evenly to the sequential or diverging color palette.}
 
-\item{palette}{- a palette name or a vector of colors. See tmaptools::palette_explorer() for the named palettes. Use a "-" as prefix to reverse the palette. The default palette is taken from tm_layout's argument aes.palette.}
+\item{palette}{- a palette name, a vector of colors, or NULL. See tmaptools::palette_explorer() for the named palettes. Use a "-" as prefix to reverse the palette. The default palette is taken from the basemap (tm_layout's argument aes.palette).}
+
+\item{basemap}{- basemap for map, or name associated with a pre-defined basemap (see \code{createBasemap}).}
+
+\item{aes.palette}{- a list (with elements 'cat', 'div', 'seq') of palette names or a vectors of colors for the basemap.}
+
+\item{showMap}{- flag to print map}
 }
 \value{
-A \code{tmap} shape/fill combination map layer with polygons colored using the palette
+A \code{tmap} map (bsaemap + shape/fill combination map layer) with polygons colored using the palette
 to represent values of the ROMS variable in obj.
 }
 \description{
-Function to create a \code{tmap} map layer from an \code{sf} dataset representing a model output.
+Function to create a \code{tmap} map layer from an \code{sf} dataset representing ROMS model output.
 }
 \details{
-Creates a \code{tmap} shape/fill combination map layer with polygons colored using the palette
+Creates a \code{tmap} map (shape/fill combination map layer) with polygons colored using the palette
 to represent values of the ROMS variable in obj. If not provided, the palette will default to the
 palette associated with the basemap used to plot the layer.
 }

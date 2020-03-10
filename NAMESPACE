@@ -3,6 +3,7 @@
 export(createBasemap)
 export(createGridFromShapefile)
 export(getGrid)
+export(getStandardBoundingBox)
 export(mapLayer_CreateFromModelOutput)
 export(mapLayer_Plot)
 export(netCDF_CreateGrid)

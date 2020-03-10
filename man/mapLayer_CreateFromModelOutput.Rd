@@ -4,12 +4,27 @@
 \alias{mapLayer_CreateFromModelOutput}
 \title{Create a \code{tmap} map layer from an \code{sf} dataset representing a model output}
 \usage{
-mapLayer_CreateFromModelOutput(obj, palette = NULL)
+mapLayer_CreateFromModelOutput(
+  obj,
+  col = 4,
+  n = 10,
+  style = ifelse(is.null(breaks), "pretty", "fixed"),
+  breaks = NULL,
+  palette = c("blue", "red")
+)
 }
 \arguments{
 \item{obj}{- \code{sf} dataset}
 
-\item{palette}{-}
+\item{col}{- name or index of values column to plot}
+
+\item{n}{- preferred number of classes.}
+
+\item{style}{- method to process the color scale. Discrete options are "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", "jenks", and "log10_pretty". For discrete options (except "log10_pretty"), see the details in tmap::classIntervals. Continuous options are "cont", "order", and "log10". The first maps the values of col to a smooth gradient, the second maps the order of values of col to a smooth gradient, and the third uses a logarithmic transformation.}
+
+\item{breaks}{- in case style=="fixed", breaks should be specified. The breaks argument can also be used when style="cont". In that case, the breaks are mapped evenly to the sequential or diverging color palette.}
+
+\item{palette}{- a palette name or a vector of colors. See tmaptools::palette_explorer() for the named palettes. Use a "-" as prefix to reverse the palette. The default palette is taken from tm_layout's argument aes.palette.}
 }
 \value{
 A \code{tmap} shape/fill combination map layer with polygons colored using the palette
