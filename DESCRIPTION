@@ -1,8 +1,8 @@
 Package: wtsROMS
 Type: Package
 Title: Functions to deal with ROMS model grids and netcdf output
-Version: 2020.03.16
-Date: 2020-03-16
+Version: 2020.03.27
+Date: 2020-03-27
 Author: Wiliam T. Stockhausen
 Maintainer: Wiliam T. Stockhausen <wiliam.stockhausen@noaa.gov>
 Description: Functions to deal with ROMS model grids and netcdf output.
@@ -12,6 +12,7 @@ LazyData: true
 RoxygenNote: 7.0.2
 Depends: R (>= 3.5.0)
 Imports:
+  lubridate,
   ncdf4,
   sf,
   wtsGIS,

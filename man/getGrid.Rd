@@ -15,7 +15,8 @@ getGrid(name, verbose = FALSE)
 Function to get a ROMS model grid as an sf dataframe.
 }
 \details{
-Returns an sf dataframe corresponding to the requested model grid.\cr
+Returns an sf dataframe corresponding to the requested model grid,
+or NULL if the name is not a name for an available grid.\cr
 Available grids are:
 \itemize{
  \item{"CGOA" - Coastal Gulf of Alaska 3km grid}

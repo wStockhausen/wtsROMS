@@ -24,7 +24,14 @@ oceanTime_Find(
 \item{verbose}{- flag to print extra information}
 }
 \value{
-Name of model output file in which the input ocean_time is bracketed.
+One-row dataframe with columns:
+\itemize{
+  \item{ot,input ocean time (s)}
+  \item{date,associated date}
+  \item{fn,Name of model output file in which the input ocean_time is bracketed.}
+  \item{ts,lefthand bracketing time slice in file}
+  \item{bracket, bracketing times}
+}
 }
 \description{
 Function to find the file in which an input ocean_time is bracketed.

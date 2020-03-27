@@ -9,7 +9,14 @@
 #' @param ref - calendar reference (default = "1900-01-01 00:00:00")
 #' @param verbose - flag to print extra information
 #'
-#' @return Name of model output file in which the input ocean_time is bracketed.
+#' @return One-row dataframe with columns:
+#' \itemize{
+#'   \item{ot,input ocean time (s)}
+#'   \item{date,associated date}
+#'   \item{fn,Name of model output file in which the input ocean_time is bracketed.}
+#'   \item{ts,lefthand bracketing time slice in file}
+#'   \item{bracket, bracketing times}
+#' }
 #'
 #' @details None.
 #'
@@ -35,33 +42,40 @@ oceanTime_Find<-function(ocean_time,
   #--is matched or bracketed
   match<-FALSE;   #flag indicating match
   fnr<-NULL;      #matched file
-  last_ot<--Inf;  #ocean_time at previous time step
+  tsr<-NULL;      #matched timeslice (timeslice for previous time step)
   last_fn<-NULL;  #file name at previous time step
+  last_ot<--Inf;  #ocean_time at previous time step
+  last_ts<-NULL;  #number of time slices in last file
   for (fn in fns){#--loop over filenames
     if (verbose) cat(paste0("testing file '",fn,"':\n"));
     ots<-netCDF_GetOceanTimes(fn)$ocean_times;
+    tsr<-0;
     for (ot in ots){#--loop over ocean_times in file
+      tsr<-tsr+1;
       if (verbose) cat(paste0("testing ",last_ot," <= ",ot0," < ",ot,"\n"));
       if ((last_ot<=ot0)&(ot0<ot)){
         match<-TRUE;
         fnr<-last_fn;
+        tsr<-last_ts;
         bracket<-c(last_ot,ot);
       } else {
         last_fn<-fn;
         last_ot<-ot;
+        last_ts<-tsr;
       }
       if (match) break;
     }#--ot
     if (match) break;
   }#--fn
   if (match){
-    msg<-paste0("Bracketed ocean_time ",oceanTime_ConvertToPOSIXct(ot0,ref),
-                " by ",
-                paste(oceanTime_ConvertToPOSIXct(bracket,ref),collapse=", "));
+    ot0d<-oceanTime_ConvertToPOSIXct(ot0,ref);
+    bracket<-paste(oceanTime_ConvertToPOSIXct(bracket,ref),collapse=", ");
+    msg<-paste0("Bracketed ocean_time ",ot0d," by [",bracket,"]");
     message(msg);
+    return(data.frame(ot=ot0,date=ot0d,fn=fnr,ts=tsr,bracket=bracket,stringsAsFactors=FALSE));
   } else {
     msg<-"no file was found.\n";
     warning(msg,immediate.=TRUE);
+    return(NULL);
   }
-  return(fnr);
 }

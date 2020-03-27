@@ -18,7 +18,7 @@ This function returns a bounding box to display a standard map area for ROMS mod
 \details{
 The bounding box is returned in list format, with coordinates defining the
 bottomleft and topright boundaries for the area. These bounding boxes are slightly different
-from those provided by \code{\link{[wtsGIS]getStandardBoundingBox}} and are optimized for
+from those provided by \code{\link[wtsGIS]{getStandardBoundingBox}} and are optimized for
 ROMS model output.
 
 Available areas are: "EBS", "Bering10k", "CGOA", "CGOA shelf"
