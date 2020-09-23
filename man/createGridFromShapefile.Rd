@@ -4,12 +4,12 @@
 \alias{createGridFromShapefile}
 \title{Create a \code{sf} dataframe representing a ROMS grid from a shapefile}
 \usage{
-createGridFromShapefile(shapefile, strCRS = wtsGIS::getCRS("AlaskaAlbers"))
+createGridFromShapefile(shapefile, strCRS = wtsGIS::get_crs("AlaskaAlbers")[1])
 }
 \arguments{
 \item{shapefile}{- path to shapefile derived from ROMS grid.}
 
-\item{strCRS}{- coordinate reference for sahpefile}
+\item{strCRS}{- coordinate reference for a shapefile}
 }
 \value{
 A \code{sf} dataframe object representing the grid

@@ -11,7 +11,7 @@
 #'
 #' @return tmap-style basemap
 #'
-#' @details Requires packages \code{wtsGIS}, \code{tmap}, and possibly tmaptools.
+#' @details Requires packages \code{wtsGIS}, \code{tmap}, and possibly \code{tmaptools}.
 #' See \code{wtsGIS::getStandardBoundingBox} for alternative, predefined bounding boxes.
 #'
 #' @import tmap

@@ -6,12 +6,13 @@
 #' @param name - name of grid to return
 #' @param verbose - flag (T/F) to print additional information
 #'
-#' @details Returns an sf dataframe corresponding to the requested model grid,
+#' @details Returns an \code{sf} dataframe corresponding to the requested model grid,
 #' or NULL if the name is not a name for an available grid.\cr
 #' Available grids are:
 #' \itemize{
 #'  \item{"CGOA" - Coastal Gulf of Alaska 3km grid}
 #'  \item{"Bering10K" - Bering Sea 10km grid}
+#'  \item{"NEP4" - NEP4 grid}
 #' }
 #'
 #' @export
@@ -24,6 +25,9 @@ getGrid<-function(name,verbose=FALSE){
   if (toupper(name)=="BERING10K")
     fn<-system.file(file.path("extdata/grids","Bering10k.RData"),package="wtsROMS");
     #fn<-file.path("inst/extdata/grids","Bering10k.RData");#--for testing
+  if (toupper(name)=="NEP4")
+    fn<-system.file(file.path("extdata/grids","NEP4.RData"),package="wtsROMS");
+    #fn<-file.path("inst/extdata/grids","NEP4.RData");#--for testing
 
   load(fn,verbose=verbose);
   return(roms_grid);

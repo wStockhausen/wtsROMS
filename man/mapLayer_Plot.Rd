@@ -24,7 +24,7 @@ mapLayer_Plot(
 
 \item{n}{- preferred number of classes.}
 
-\item{style}{- method to process the color scale. Discrete options are "fixed", "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", "jenks", and "log10_pretty". For discrete options (except "log10_pretty"), see the details in tmap::classIntervals. Continuous options are "cont", "order", and "log10". The first maps the values of col to a smooth gradient, the second maps the order of values of col to a smooth gradient, and the third uses a logarithmic transformation.}
+\item{style}{- method to process the color scale.}
 
 \item{breaks}{- in case style=="fixed", breaks should be specified. The breaks argument can also be used when style="cont". In that case, the breaks are mapped evenly to the sequential or diverging color palette.}
 
@@ -32,7 +32,7 @@ mapLayer_Plot(
 
 \item{basemap}{- basemap for map, or name associated with a pre-defined basemap (see \code{createBasemap}).}
 
-\item{aes.palette}{- a list (with elements 'cat', 'div', 'seq') of palette names or a vectors of colors for the basemap.}
+\item{aes.palette}{- a list (with elements 'cat', 'div', 'seq') of palette names or a vector of colors for the basemap.}
 
 \item{showMap}{- flag to print map}
 }
@@ -47,4 +47,12 @@ Function to create a \code{tmap} map layer from an \code{sf} dataset representin
 Creates a \code{tmap} map (shape/fill combination map layer) with polygons colored using the palette
 to represent values of the ROMS variable in obj. If not provided, the palette will default to the
 palette associated with the basemap used to plot the layer.
+
+Discrete options for \code{style} are "fixed", "sd", "equal", "pretty", "quantile",
+"kmeans", "hclust", "bclust", "fisher", "jenks", and "log10_pretty".
+For discrete options (except "log10_pretty"), see the details in \code{tmap::classIntervals}.
+
+Continuous options for \code{style} are "cont", "order", and "log10". The first maps the values of \code{col}
+to a smooth gradient, the second maps the order of values of col to a smooth gradient,
+and the third uses a logarithmic transformation.
 }

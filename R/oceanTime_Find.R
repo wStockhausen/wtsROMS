@@ -38,7 +38,7 @@ oceanTime_Find<-function(ocean_time,
                   full.names=TRUE);
   if (verbose) cat(fns,"\n");
 
-  #--loop through files to find file inwhich input ocean_time
+  #--loop through files to find file in which input ocean_time
   #--is matched or bracketed
   match<-FALSE;   #flag indicating match
   fnr<-NULL;      #matched file

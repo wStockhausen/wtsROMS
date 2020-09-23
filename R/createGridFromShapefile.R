@@ -4,7 +4,7 @@
 #' @description Function to create a \code{sf} dataframe representing a ROMS grid from a shapefile.
 #'
 #' @param shapefile - path to shapefile derived from ROMS grid.
-#' @param strCRS - coordinate reference for sahpefile
+#' @param strCRS - coordinate reference for a shapefile
 #'
 #' @return A \code{sf} dataframe object representing the grid
 #'
@@ -14,7 +14,7 @@
 #' @export
 #'
 createGridFromShapefile<-function(shapefile,
-                                  strCRS = wtsGIS::getCRS("AlaskaAlbers")){
+                                  strCRS = wtsGIS::get_crs("AlaskaAlbers")[1]){
   roms_grid<-wtsGIS::createLayerFromShapefile(shapefile,
                                               strCRS = strCRS,
                                               as.sf = TRUE);

@@ -8,17 +8,17 @@ netCDF_CreateGrid(
   netcdf,
   grid_type = c("rho", "psi", "u", "v"),
   coord_type = c("latlon", "xy"),
-  strCRS = ifelse(tolower(coord_type[1]) == "latlon", wtsGIS::getCRS("NAD83"),
-    wtsGIS::getCRS("AlaskaAlbers")),
+  strCRS = ifelse(tolower(coord_type[1]) == "latlon", wtsGIS::get_crs("NAD83")[[1]],
+    wtsGIS::get_crs("AlaskaAlbers")[[1]]),
   verbose = TRUE
 )
 }
 \arguments{
 \item{netcdf}{- path to netcdf file with ROMS grid, or a ncdf4 object connected to a netcdf file}
 
-\item{grid_type}{-}
+\item{grid_type}{- "rho","psi","u","v" [only works now for "rho" grid type]}
 
-\item{coord_type}{-}
+\item{coord_type}{- "latlon","xy" [only works now for "latlon" type]}
 
 \item{strCRS}{- coordinate reference for grid}
 
@@ -32,5 +32,5 @@ Function to create a \code{sf} dataframe representing a ROMS grid from a netcdf 
 }
 \details{
 Creates an sf dataframe from a netcdf file representing a ROMS grid.
-Masked cells (land) have a value of NA.
+Masked cells (e.g., land) have a value of NA.
 }

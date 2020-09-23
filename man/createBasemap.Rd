@@ -31,6 +31,6 @@ tmap-style basemap
 Function to create a basemap.
 }
 \details{
-Requires packages \code{wtsGIS}, \code{tmap}, and possibly tmaptools.
+Requires packages \code{wtsGIS}, \code{tmap}, and possibly \code{tmaptools}.
 See \code{wtsGIS::getStandardBoundingBox} for alternative, predefined bounding boxes.
 }

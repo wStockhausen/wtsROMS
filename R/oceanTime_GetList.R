@@ -8,7 +8,7 @@
 #' @param ref - calendar reference (default = "1900-01-01 00:00:00")
 #' @param verbose - flag to print extra information
 #'
-#' @return Dataframe with filename ocean_time (in sconds), and ocean_date (POSIXct dates) as columns.
+#' @return Dataframe with filename, ocean_time (in seconds), and ocean_date (POSIXct dates) as columns.
 #'
 #' @details Numeric values for ocean_times are in seconds
 #' relative to the calendar reference date.

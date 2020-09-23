@@ -21,7 +21,7 @@ oceanTime_GetList(
 \item{verbose}{- flag to print extra information}
 }
 \value{
-Dataframe with filename ocean_time (in sconds), and ocean_date (POSIXct dates) as columns.
+Dataframe with filename, ocean_time (in seconds), and ocean_date (POSIXct dates) as columns.
 }
 \description{
 Function to get a dataframe of ocean_times associated with files in a folder.

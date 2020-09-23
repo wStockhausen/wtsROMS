@@ -14,9 +14,14 @@
 #' @export
 #'
 netCDF_GetInfo<-function(netcdf){
-  ncf<-netCDF_Open(netcdf);
-  if (is.null(ncf)) return(NULL);
-  on.exit(ncdf4::nc_close(ncf));
+  if (class(netcdf)!="ncdf4"){
+    if (verbose) message("netCDF_GetInfo: opening netcdf file '",netcdf,"'");
+    ncf<-netCDF_Open(netcdf);
+    if (is.null(ncf)) return(NULL);
+    on.exit(ncdf4::nc_close(ncf));
+  } else {
+    ncf<-netcdf;
+  }
 
   #create dataframe with info on dimensions
   nd<-length(ncf$dim);
