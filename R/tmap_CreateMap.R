@@ -1,9 +1,9 @@
 #'
-#' @title Create a \code{tmap} map layer from an \code{sf} dataset representing ROMS model output
+#' @title Create a complete \pkg{tmap} map from an \code{sf} dataframe representing ROMS model output
 #'
-#' @description Function to create a \code{tmap} map layer from an \code{sf} dataset representing ROMS model output.
+#' @description Function to create a complete \pkg{tmap} map layer from an \code{sf} dataframe representing ROMS model output.
 #'
-#' @param obj - an \code{sf} polygon dataset.
+#' @param sf_dfr - an \code{sf} polygon dataframe.
 #' @param col - name or index of values column to plot
 #' @param n	- preferred number of classes.
 #' @param style	- method to process the color scale.
@@ -13,11 +13,11 @@
 #' @param aes.palette - a list (with elements 'cat', 'div', 'seq') of palette names or a vector of colors for the basemap.
 #' @param showMap - flag to print map
 #'
-#' @return A \code{tmap} map (bsaemap + shape/fill combination map layer) with polygons colored using the palette
-#' to represent values of the ROMS variable in obj.
+#' @return A \pkg{tmap} map (bsaemap + shape/fill combination map layer) with polygons colored using the palette
+#' to represent values of the ROMS variable in \code{sf_dfr}.
 #'
-#' @details Creates a \code{tmap} map (shape/fill combination map layer) with polygons colored using the palette
-#' to represent values of the ROMS variable in obj. If not provided, the palette will default to the
+#' @details Creates a \pkg{tmap} map (shape/fill combination map layer) with polygons colored using the palette
+#' to represent values of the ROMS variable in \code{sf_dfr}. If not provided, the palette will default to the
 #' palette associated with the basemap used to plot the layer.
 #'
 #' Discrete options for \code{style} are "fixed", "sd", "equal", "pretty", "quantile",
@@ -33,7 +33,7 @@
 #'
 #' @export
 #'
-mapLayer_Plot<-function(obj,
+tmap_CreateMap<-function(sf_dfr,
                         col=4,
                         n=10,
                         style=ifelse(is.null(breaks), "pretty", "fixed"),
@@ -41,26 +41,26 @@ mapLayer_Plot<-function(obj,
                         palette=c("blue","red"),
                         basemap=NULL,
                         aes.palette=list(cat = c("blue", "red"), div = c("blue", "red"), seq = c("blue","red")),
-                        showMap=TRUE){
+                        showMap=FALSE){
   if (is.character(basemap)) {
-    message("mapLayer_Plot: creating basemap")
-    bbox<-wtsGIS::getStandardBoundingBox(basemap);
-    basemap<-wtsROMS::createBasemap(boundingbox=bbox,aes.palette=aes.palette)
-    message("mapLayer_Plot: created basemap")
+    message("tmap_CreateMap: creating basemap")
+    bbox<-wtsGIS::getStandardBBox(basemap);
+    basemap<-wtsROMS::tmap_CreateBasemap(boundingbox=bbox,aes.palette=aes.palette)
+    message("tmap_CreateMap: created basemap")
   }
   if (is.null(basemap)){
-    msg<-"mapLayer_Plot: must supply a basemap or valid name for one."
+    msg<-"tmap_CreateMap: must supply a basemap or valid name for one."
     stop(msg);
   }
-  if (inherits(obj,"tmap")) {
-    layer<-obj;
+  if (inherits(sf_dfr,"tmap")) {
+    layer<-sf_dfr;
   } else {
-    message("mapLayer_Plot: creating map layer")
-    layer<-mapLayer_CreateFromModelOutput(obj,col=col,n=n,style=style,breaks=breaks,palette=palette);
-    message("mapLayer_Plot: created map layer")
+    message("tmap_CreateMap: creating map layer")
+    layer<-tmap_CreateLayer(sf_dfr,col=col,n=n,style=style,breaks=breaks,palette=palette);
+    message("tmap_CreateMap: created map layer")
   }
   map <- basemap + layer;
-  if (showMap) {message("mapLayer_Plot: --printing map"); print(map); message("--finished printing map");}
+  if (showMap) {message("tmap_CreateMap: --printing map"); print(map); message("--finished printing map");}
 
   return(map);
 }

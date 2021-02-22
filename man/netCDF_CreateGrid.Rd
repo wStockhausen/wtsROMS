@@ -9,7 +9,7 @@ netCDF_CreateGrid(
   grid_type = c("rho", "psi", "u", "v"),
   coord_type = c("latlon", "xy"),
   strCRS = ifelse(tolower(coord_type[1]) == "latlon", wtsGIS::get_crs("NAD83")[[1]],
-    wtsGIS::get_crs("AlaskaAlbers")[[1]]),
+    sf::NA_crs_),
   verbose = TRUE
 )
 }
@@ -20,7 +20,7 @@ netCDF_CreateGrid(
 
 \item{coord_type}{- "latlon","xy" [only works now for "latlon" type]}
 
-\item{strCRS}{- coordinate reference for grid}
+\item{strCRS}{- coordinate reference for grid (latlon default is NAD83, xy default is sf::NA_crs_)}
 
 \item{verbose}{- flag to print additional information}
 }

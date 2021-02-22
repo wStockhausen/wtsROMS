@@ -6,7 +6,7 @@
 #' @param netcdf - path to netcdf file with ROMS grid, or a ncdf4 object connected to a netcdf file
 #' @param grid_type - "rho","psi","u","v" [only works now for "rho" grid type]
 #' @param coord_type - "latlon","xy" [only works now for "latlon" type]
-#' @param strCRS - coordinate reference for grid
+#' @param strCRS - coordinate reference for grid (latlon default is NAD83, xy default is sf::NA_crs_)
 #' @param verbose - flag to print additional information
 #'
 #' @return A \code{sf} dataframe object representing the grid
@@ -23,7 +23,7 @@
 netCDF_CreateGrid<-function(netcdf,
                              grid_type=c("rho","psi","u","v"),
                              coord_type=c("latlon","xy"),
-                             strCRS = ifelse(tolower(coord_type[1])=="latlon",wtsGIS::get_crs("NAD83")[[1]],wtsGIS::get_crs("AlaskaAlbers")[[1]]),
+                             strCRS = ifelse(tolower(coord_type[1])=="latlon",wtsGIS::get_crs("NAD83")[[1]],sf::NA_crs_),
                              verbose=TRUE){
   grid_type  <-grid_type[1];
   coord_type<-coord_type[1];
@@ -64,7 +64,9 @@ netCDF_CreateGrid<-function(netcdf,
     #----have corners defined
     xn<-paste0(xn,"psi");#--need coords at corners
     yn<-paste0(yn,"psi");#--need coords at corners
-    mn<-"mask_rho";     #--mask for centers
+    lnc<-"lon_rho";      #--longitude for centers
+    ltc<-"lat_rho";      #--latitude for centers
+    mn<-"mask_rho";      #--mask for centers
     n_eta<-ncf$dim$eta_rho$len;
     eta_bgn<-2;         #--eta for rho points starts at 2
     eta_end<-n_eta-1;   #--eta for rho points ends at n_eta-1
@@ -75,10 +77,12 @@ netCDF_CreateGrid<-function(netcdf,
     n_xi<-n_xi-2;       #
   }
 
-  vx<-ncvar_get(ncf,varid=xn); #--value of x-coord at corner locations
-  vy<-ncvar_get(ncf,varid=yn); #--value of y-coord at corner locations
-  vm<-ncvar_get(ncf,varid=mn); #--value of mask at rho locations
-  vh<-ncvar_get(ncf,varid="h");#--value of bathymetric depth at rho locations
+  vx<-ncvar_get(ncf,varid=xn);  #--value of x-coord at corner locations
+  vy<-ncvar_get(ncf,varid=yn);  #--value of y-coord at corner locations
+  ln<-ncvar_get(ncf,varid=lnc); #--value of lon-coord at center locations
+  lt<-ncvar_get(ncf,varid=ltc); #--value of lat-coord at center locations
+  vm<-ncvar_get(ncf,varid=mn);  #--value of mask at rho locations
+  vh<-ncvar_get(ncf,varid="h"); #--value of bathymetric depth at rho locations
 
   k<-0;
   nt<-n_eta*n_xi;
@@ -87,7 +91,9 @@ netCDF_CreateGrid<-function(netcdf,
   kxi<-vector(mode="integer",  length=nt);
   ket<-vector(mode="integer",  length=nt);
   khv<-vector(mode="numeric",  length=nt);
-  kgm<-vector(mode="list",     length=nt);
+  kln<-vector(mode="numeric",  length=nt);#--longitude at center point
+  klt<-vector(mode="numeric",  length=nt);#--latitude at center point
+  kgm<-vector(mode="list",     length=nt);#--vector of lists for polygon geometries
   for (eta in eta_bgn:eta_end){
     for (xi in xi_bgn:xi_end){
       k<-k+1;
@@ -102,11 +108,13 @@ netCDF_CreateGrid<-function(netcdf,
       kid[k]<-paste0(xi,"_",eta);
       kxi[k]<-xi;
       ket[k]<-eta;
+      kln[k]<-ln[xi,eta];
+      klt[k]<-lt[xi,eta];
       khv[k]<-ifelse(is.na(vm[xi,eta])||(vm[xi,eta]!=0), vh[xi,eta],NA);#--mask = NA or !=0 indicates water at rho point
       kgm[[k]]<-sf::st_polygon(list(matrix(c(xll,yll,xlr,ylr,xur,yur,xul,yul,xll,yll),ncol=2,byrow=TRUE)), dim="XY");
     }
   }
   sfc<-sf::st_sfc(kgm,crs=strCRS);#specify the coordinate reference system
-  dfr<-sf::st_sf(data.frame(ID=kid,xi=kxi,eta=ket,Z=khv,geometry=sfc));
+  dfr<-sf::st_sf(data.frame(ID=kid,xi=kxi,eta=ket,lon=kln,lat=klt,Z=khv,geometry=sfc));
   return(dfr);
 }

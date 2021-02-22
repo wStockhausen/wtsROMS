@@ -17,10 +17,10 @@
 #'
 #' @export
 #'
-oceanTime_GetList<-function(path,
-                           pattern,
-                           ref=as.POSIXct("1900-01-01 00:00:00",tz="GMT"),
-                           verbose=FALSE) {
+oceanTime_GetTimes<-function(path,
+                             pattern,
+                             ref=as.POSIXct("1900-01-01 00:00:00",tz="GMT"),
+                             verbose=FALSE) {
   #--get filenames in path that match pattern
   fns<-list.files(path=path,
                   pattern=utils::glob2rx(pattern),
@@ -34,8 +34,10 @@ oceanTime_GetList<-function(path,
     ots<-netCDF_GetOceanTimes(fn);
     if (verbose) cat(fn," : ",ots$ocean_times,"\n");
     rows<-data.frame(fn=fn,ocean_time=ots$ocean_times,ocean_date=ots$dates,stringsAsFactors=FALSE);
-    cat(fn,":\n");
-    print(rows[,2:3]);
+    if (verbose){
+      cat(fn,":\n");
+      print(rows[,2:3]);
+    }
     dfr<-rbind(dfr,rows);
   }#--fn
   return(dfr);
