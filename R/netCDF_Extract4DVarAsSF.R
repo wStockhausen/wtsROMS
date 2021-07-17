@@ -77,7 +77,7 @@ netCDF_Extract4DVarAsSF<-function(netcdf,
       kvr[k]<-vr[xi,eta,layer,timeslice];
     }
   }
-  dfr<-sf::st_sf(data.frame(ID=kid,xi=kxi,eta=ket,var=kvr,geometry=roms_grid$geometry));
+  dfr<-sf::st_sf(tibble(ID=kid,xi=kxi,eta=ket,var=kvr,geometry=roms_grid$geometry));
   names(dfr)[4]=variable;
   return(dfr);
 }

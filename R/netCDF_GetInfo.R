@@ -4,6 +4,7 @@
 #' @description Function to get information on dimensions and variables in a netcdf file.
 #'
 #' @param netcdf - path to netcdf file (or previously opened connection)
+#' @param verbose - flag to print debugging info
 #'
 #' @return list of dataframes with information on dimensions ("dims") and variables ("vars").
 #'
@@ -13,7 +14,7 @@
 #'
 #' @export
 #'
-netCDF_GetInfo<-function(netcdf){
+netCDF_GetInfo<-function(netcdf,verbose=FALSE){
   if (class(netcdf)!="ncdf4"){
     if (verbose) message("netCDF_GetInfo: opening netcdf file '",netcdf,"'");
     ncf<-netCDF_Open(netcdf);

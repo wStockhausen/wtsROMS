@@ -4,13 +4,15 @@
 \alias{netCDF_GetOceanTimes}
 \title{Get ocean_times from a ROMS model netcdf file}
 \usage{
-netCDF_GetOceanTimes(netcdf)
+netCDF_GetOceanTimes(netcdf, verbose = FALSE)
 }
 \arguments{
 \item{netcdf}{- path to ROMS model netcdf file (or previously opened connection)}
+
+\item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
-Dataframe with columns ocean_times (in seconds since model origin) and dates (POSIXct dates).
+tibble (dataframe) with columns ocean_times (in seconds since model origin) and dates (POSIXct dates).
 }
 \description{
 Function to get ocean_times from a ROMS model netcdf file.

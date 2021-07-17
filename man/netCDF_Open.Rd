@@ -16,6 +16,6 @@ object of class 'ncdf4', an opened connection to a netcdf file.
 Function to open a netcdf file and return an opened connection.
 }
 \details{
-The returned object shouldbe closed by the user using\code{ncdf4::nc_close(...)}.
+The returned object should be closed by the user using\code{ncdf4::nc_close(...)}.
 \code{netcdf} is simply passed through if it is already an open connection.
 }
