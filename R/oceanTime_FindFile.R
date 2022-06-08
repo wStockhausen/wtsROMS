@@ -42,8 +42,12 @@ oceanTime_FindFile<-function(ocean_time,
     fnr = dfr_files$fn[idx];
     sub = dfr_files %>% subset(fn==fnr);
     tsr = max(which(sub$ocean_time<=ot0));
-    bracket = paste(c(dfr_files$ocean_date[idx],dfr_files$ocean_date[idx+1]),collapse=", ");
-    return(data.frame(ot=ot0,date=ot0d,fn=fnr,ts=tsr,bracket=bracket,stringsAsFactors=FALSE));
+    if (!is.na(dfr_files$ocean_date[idx+1])){
+      bracket = paste(c(dfr_files$ocean_date[idx],dfr_files$ocean_date[idx+1]),collapse=", ");
+      msg<-paste0("Bracketed ocean_time ",ot0," by [",bracket,"]");
+      message(msg);
+      return(data.frame(ot=ot0,date=ot0d,fn=fnr,ts=tsr,bracket=bracket,stringsAsFactors=FALSE));
+    }
   } else {
     #--get filenames in path that match pattern
     fns<-list.files(path=path,
@@ -76,9 +80,9 @@ oceanTime_FindFile<-function(ocean_time,
           last_ot<-ot;
           last_ts<-tsr;
         }
-        if (match) break;
+        if (match) {break;}
       }#--ot
-      if (match) break;
+      if (match) {break;}
     }#--fn
     if (match){
       ot0d<-oceanTime_ConvertToPOSIXct(ot0,ref);
@@ -86,10 +90,9 @@ oceanTime_FindFile<-function(ocean_time,
       msg<-paste0("Bracketed ocean_time ",ot0d," by [",bracket,"]");
       message(msg);
       return(data.frame(ot=ot0,date=ot0d,fn=fnr,ts=tsr,bracket=bracket,stringsAsFactors=FALSE));
-    } else {
-      msg<-"no file was found.\n";
-      warning(msg,immediate.=TRUE);
-      return(NULL);
     }
   }
+  msg<-"no file was found.\n";
+  warning(msg,immediate.=TRUE);
+  return(NULL);
 }

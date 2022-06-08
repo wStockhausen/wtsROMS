@@ -4,10 +4,12 @@
 \alias{netCDF_GetInfo}
 \title{Get information on dimensions and variables in a netcdf file}
 \usage{
-netCDF_GetInfo(netcdf)
+netCDF_GetInfo(netcdf, verbose = FALSE)
 }
 \arguments{
 \item{netcdf}{- path to netcdf file (or previously opened connection)}
+
+\item{verbose}{- flag to print debugging info}
 }
 \value{
 list of dataframes with information on dimensions ("dims") and variables ("vars").
