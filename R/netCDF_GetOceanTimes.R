@@ -6,7 +6,8 @@
 #' @param netcdf - path to ROMS model netcdf file (or previously opened connection)
 #' @param verbose - flag (T/F) to print diagnostic info
 #'
-#' @return tibble (dataframe) with columns ocean_times (in seconds since model origin) and dates (POSIXct dates).
+#' @return tibble (dataframe) with columns ocean_times (in seconds since model origin) and dates (POSIXct dates),
+#' or NULL if file is invalid.
 #'
 #' @details Dates associated with ocean_times are relative to the model reference date determined by
 #' parsing the \code{units} associated with the \code{ocean_time} dimension in the netcdf dataset.

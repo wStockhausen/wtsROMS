@@ -32,13 +32,15 @@ oceanTime_GetTimes<-function(path,
   dfr<-NULL;
   for (fn in fns){#--loop over filenames
     ots<-netCDF_GetOceanTimes(fn);
-    if (verbose) cat(fn," : ",ots$ocean_times,"\n");
-    rows<-data.frame(fn=fn,ocean_time=ots$ocean_times,ocean_date=ots$dates,stringsAsFactors=FALSE);
-    if (verbose){
-      cat(fn,":\n");
-      print(rows[,2:3]);
+    if (!is.null(ots)){
+      if (verbose) cat(fn," : ",ots$ocean_times,"\n");
+      rows<-data.frame(fn=fn,ocean_time=ots$ocean_times,ocean_date=ots$dates,stringsAsFactors=FALSE);
+      if (verbose){
+        cat(fn,":\n");
+        print(rows[,2:3]);
+      }
+      dfr<-rbind(dfr,rows);
     }
-    dfr<-rbind(dfr,rows);
   }#--fn
   return(dfr);
 }

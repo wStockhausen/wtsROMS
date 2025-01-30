@@ -12,7 +12,8 @@ netCDF_GetOceanTimes(netcdf, verbose = FALSE)
 \item{verbose}{- flag (T/F) to print diagnostic info}
 }
 \value{
-tibble (dataframe) with columns ocean_times (in seconds since model origin) and dates (POSIXct dates).
+tibble (dataframe) with columns ocean_times (in seconds since model origin) and dates (POSIXct dates),
+or NULL if file is invalid.
 }
 \description{
 Function to get ocean_times from a ROMS model netcdf file.
